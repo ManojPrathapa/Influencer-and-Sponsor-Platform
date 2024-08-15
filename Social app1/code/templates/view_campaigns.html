@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2 class="text-center mb-4">Available Campaigns</h2>
+
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      {% for campaign in campaigns %}
+      <div class="card mb-4 campaign-item">
+        <div class="card-body campaign-details">
+          <h5 class="card-title">{{ campaign.title }}</h5>
+          <p class="card-text">{{ campaign.campaign_description }}</p>
+          <p class="card-text">Budget: ${{ campaign.campaign_budget }}</p>
+          <p class="card-text">Start Date: {{ campaign.start.strftime('%Y-%m-%d') }}</p>
+          <p class="card-text">End Date: {{ campaign.end.strftime('%Y-%m-%d') }}</p>
+          <br />
+
+          {% if current_user.role == 'influencer' %}
+            {% if joined_campaigns.get(campaign.campaign_id) %}
+              <button class="btn btn-disabled" disabled>Joined</button>
+              <br />
+              <form method="post" action="{{ url_for('submit_ad_request', campaign_id=campaign.campaign_id) }}">
+                {{ form.hidden_tag() }}
+                <div class="form-group">
+                  <label for="request_content">Ad Content</label>
+                  {{ form.request_content(class="form-control") }}
+                </div>
+                <div class="form-group">
+                  <label for="payment">Payment Amount</label>
+                  {{ form.payment(class="form-control") }}
+                </div>
+                <button type="submit" class="btn btn-primary">Submit Ad Request</button>
+              </form>
+            {% else %}
+              <form method="post" action="{{ url_for('join_campaign', campaign_id=campaign.campaign_id) }}">
+                <button type="submit" class="btn btn-primary">Join Campaign</button>
+              </form>
+            {% endif %}
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block styles %}
+<style>
+  .container {
+    background-color: #ffffff;
+  }
+
+  .campaign-item {
+    background-color: #f4faff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+
+  .campaign-details {
+    padding: 20px;
+  }
+
+  .campaign-item:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  .card-title, 
+  .card-text {
+    color: #333333;
+  }
+
+  .btn-primary {
+    background-color: #007bff;
+    border: none;
+    color: #ffffff;
+  }
+
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+
+  .btn-disabled {
+    background-color: #6c757d;
+    border: none;
+    color: #ffffff;
+  }
+</style>
+{% endblock %}

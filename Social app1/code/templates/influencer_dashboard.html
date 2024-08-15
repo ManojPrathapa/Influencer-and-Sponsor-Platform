@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+  <!-- Main Heading for the Dashboard -->
+  <h2 class="text-center mb-4">Influencer Dashboard</h2>
+  
+  <!-- Profile Card -->
+  <div class="card profile-card mt-4 custom-profile-card">
+    <div class="card-body">
+      <!-- Card Title -->
+      <h5 class="card-title">Your Profile</h5>
+       <!-- Display Current Description -->
+       <div class="mb-4">
+        <strong>Description:</strong>
+        <p>{{ current_user.bio or 'No description provided' }}</p>
+      </div>
+      
+      <!-- Form for Updating Profile Description -->
+      <form method="POST" action="{{ url_for('update_profile') }}">
+        <!-- List of Profile Details -->
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            <strong>Username:</strong> {{ current_user.username }}
+          </li>
+          <li class="list-group-item">
+            <strong>Description:</strong>
+            <!-- Textarea for Description -->
+            <textarea id="description" name="description" class="form-control" placeholder="Add your description here">{{ current_user.bio or '' }}</textarea>
+          </li>
+          <li class="list-group-item">
+            <strong>Role:</strong> Influencer
+          </li>
+        </ul>
+        <!-- Submit Button -->
+        <button type="submit" class="btn custom-btn custom-btn-success mt-3">Update Description</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Buttons for Navigating to Campaigns and Ad Requests -->
+  <div class="row mt-4">
+    <div class="col-md-6 mb-3">
+      <a href="{{ url_for('view_campaigns') }}" class="btn custom-btn custom-btn-primary btn-lg btn-block">View Campaigns</a>
+    </div>
+    <div class="col-md-6">
+      <a href="{{ url_for('view_ad_requests') }}" class="btn custom-btn custom-btn-success btn-lg btn-block">View Ad Requests</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block styles %}
+<style>
+  /* Styling for the Profile Card */
+  .profile-card {
+    background-color: #ffffff; /* Light background for the card */
+    border: 1px solid #e0e0e0; /* Soft border for definition */
+    border-radius: 12px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    margin-bottom: 20px; /* Space below the card */
+  }
+
+  .profile-card .card-body {
+    color: #333; /* Dark text for readability */
+  }
+
+  .profile-card .card-title {
+    color: #1e90ff; /* Bright blue for the title */
+    font-size: 1.6rem; /* Larger font size for emphasis */
+    font-weight: bold; /* Bold title for prominence */
+    margin-bottom: 20px; /* Space below the title */
+  }
+
+  /* Styling for List Items in the Profile Card */
+  .list-group-item {
+    background-color: #f8f9fa; /* Light background for list items */
+    border: 1px solid #e0e0e0; /* Soft border matching the card */
+    color: #333; /* Dark text for readability */
+  }
+
+  .list-group-item:first-child {
+    border-top-left-radius: 12px; /* Rounded top-left corner */
+    border-top-right-radius: 12px; /* Rounded top-right corner */
+  }
+
+  .list-group-item:last-child {
+    border-bottom-left-radius: 12px; /* Rounded bottom-left corner */
+    border-bottom-right-radius: 12px; /* Rounded bottom-right corner */
+  }
+
+  /* Styling for Buttons */
+  .btn {
+    border-radius: 8px; /* Rounded corners for buttons */
+    font-weight: 600; /* Medium font weight */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transitions */
+  }
+
+  .btn-primary {
+    background-color: #1e90ff; /* Blue background for primary buttons */
+    border: none; /* No border for a clean look */
+    color: #fff; /* White text color */
+  }
+
+  .btn-primary:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    transform: scale(1.05); /* Slightly enlarge button on hover */
+  }
+
+  .btn-success {
+    background-color: #4caf50; /* Green background for success buttons */
+    border-color: #4caf50; /* Border color matching the background */
+  }
+
+  .btn-success:hover {
+    background-color: #388e3c; /* Darker green on hover */
+  }
+
+  /* Styling for Form Controls */
+  .form-control {
+    background-color: #2c2c2c; /* Dark background for form fields */
+    border: 1px solid #444; /* Dark border for fields */
+    color: #e0e0e0; /* Light text color */
+    font-weight: 400; /* Normal font weight */
+  }
+
+  .form-control:focus {
+    background-color: #333; /* Slightly lighter background on focus */
+    border-color: #1e90ff; /* Blue border on focus */
+    box-shadow: 0 0 0 0.2rem rgba(30, 144, 255, 0.25); /* Blue shadow on focus */
+  }
+
+  .form-control::placeholder {
+    color: #888; /* Placeholder text color */
+  }
+</style>
+{% endblock %}

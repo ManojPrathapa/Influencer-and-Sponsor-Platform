@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="dashboard-card card p-3">
+        <div class="card-header bg-light text-dark">Dashboard</div>
+        <div class="card-body">
+          <p class="welcome-text">Hello, {{ current_user.username }}!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block styles %}
+<style>
+  .dashboard-card {
+    background-color: #f8f9fa; /* Light gray background for the card */
+    border: 1px solid #dee2e6; /* Light border color */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: box-shadow 0.3s ease; /* Smooth shadow transition */
+  }
+
+  .dashboard-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+  }
+
+  .card-header {
+    background-color: #1e90ff; /* Bright blue background for the header */
+    color: #ffffff; /* White text color */
+    font-weight: bold;
+    text-align: center; /* Centered text */
+  }
+
+  .welcome-text {
+    color: #333; /* Dark text for better readability */
+    font-size: 1.2rem; /* Slightly larger font size */
+    text-align: center; /* Centered text */
+  }
+</style>
+{% endblock %}

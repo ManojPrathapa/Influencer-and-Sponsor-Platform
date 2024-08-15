@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Social Platform</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: #f0e5f8; /* Funky background color */
+        }
+
+        .header-bar {
+            background-color: #ffffff;
+            padding: 10px 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            z-index: 1000; /* Ensure it stays on top */
+        }
+
+        .btn-container {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+        }
+
+        .content {
+            flex: 1;
+            margin-top: 60px; /* Adjust based on header height */
+        }
+
+        .footer {
+            background-color: #ffffff;
+            padding: 10px 0;
+            text-align: center;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .page-title {
+            color: #0066cc;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            color: #1e90ff; /* Blue color for section titles */
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .custom-btn {
+            border-radius: 8px;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            border: 2px solid; /* Initial border color for buttons */
+        }
+
+        .custom-btn-primary {
+            background-color: #36145f; /* Purple for primary buttons */
+            border-color: #36145f;
+            color: #ffffff;
+        }
+
+        .custom-btn-primary:hover {
+            background-color: #7b1797; /* Darker purple on hover */
+            border-color: #7b1797;
+            transform: scale(1.05);
+        }
+
+        .custom-btn-success {
+            background-color: #4caf50; /* Green for success buttons */
+            border-color: #4caf50;
+            color: #ffffff;
+        }
+
+        .custom-btn-success:hover {
+            background-color: #388e3c; /* Darker green on hover */
+            border-color: #388e3c;
+            transform: scale(1.05);
+        }
+
+        .custom-btn-info {
+            background-color: #f42a2a; /* Red for info buttons */
+            border-color: #f42a2a;
+            color: #ffffff;
+        }
+
+        .custom-btn-info:hover {
+            background-color: #d847b4; /* Darker red on hover */
+            border-color: #d847b4;
+            transform: scale(1.05);
+        }
+
+        .custom-profile-card, .custom-search-card {
+            background-color: #ffffff; /* White background for profile and search cards */
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .custom-list-group {
+            background-color: #f9f9f9; /* Light background for list group */
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        .list-group-item {
+            border: none;
+            color: #333; /* Darker text color for list items */
+        }
+
+        .list-group-item:not(:last-child) {
+            border-bottom: 1px solid #ddd;
+        }
+
+        .custom-search-bar {
+            border: 2px solid #1aff00; /* Green border for search bar */
+            border-radius: 8px;
+        }
+
+        .custom-search-bar:focus {
+            border-color: #a13cc9; /* Darker blue border on focus */
+            box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25);
+        }
+
+        .page-title {
+            color: #0066cc;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            color: #1e90ff; /* Blue color for section titles */
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .custom-dashboard-card {
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            color: #fff; /* White text for readability */
+        }
+
+        .card-active-users {
+            background-color: #4caf50; /* Green background for active users */
+        }
+
+        .card-public-campaigns {
+            background-color: #2196f3; /* Blue background for public campaigns */
+        }
+
+        .card-private-campaigns {
+            background-color: #f44336; /* Red background for private campaigns */
+        }
+
+        .card-pending-requests {
+            background-color: #ff9800; /* Orange background for pending requests */
+        }
+
+        .card-approved-requests {
+            background-color: #8bc34a; /* Light green background for approved requests */
+        }
+
+        .card-rejected-requests {
+            background-color: #e91e63; /* Pink background for rejected requests */
+        }
+
+        .custom-list-group {
+            background-color: #25177a; /* Dark background for list group */
+            border: 1px solid #5d0606;
+            border-radius: 8px;
+        }
+
+        .list-group-item {
+            border: none;
+            color: #fff; /* White text for list items */
+            background-color: #333; /* Dark background for list items */
+        }
+
+        .list-group-item:not(:last-child) {
+            border-bottom: 1px solid #444;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header-bar">
+        <div class="container d-flex justify-content-between align-items-center">
+            <h1 class="h4">Influencer Engagement and Sponsorship Platform</h1>
+            <div class="btn-container">
+                {% if current_user.is_authenticated %}
+                <a href="{{ url_for('logout') }}" class="btn custom-btn custom-btn-primary">Logout</a>
+                {% else %}
+                <a href="{{ url_for('login') }}" class="btn custom-btn custom-btn-info">Login</a>
+                <a href="{{ url_for('register') }}" class="btn custom-btn custom-btn-primary">Sign-up</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="container content">
+        {% block content %}
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-8 text-center">
+                <h2 class="page-title">Welcome to the Sponsorship Platform</h2>
+                <p class="lead mt-4">
+                    Welcome to our Influencer Engagement and Sponsorship Platform, designed to seamlessly connect influencers with sponsors. Whether you're looking to boost your brand's visibility or find the perfect influencer to represent your campaign, our platform offers a comprehensive suite of tools to facilitate collaboration and success.
+                </p>
+                <p class="mt-3">
+                    As an influencer, you have access to a wide range of campaigns tailored to your niche and audience. Our platform allows you to easily browse and apply for campaigns that match your interests, negotiate terms, and manage your engagements with sponsors. With advanced analytics and support, you can maximize your impact and grow your influence effectively.
+                </p>
+                <p class="mt-3">
+                    For sponsors, our platform provides a robust network of influencers across various sectors. You can explore detailed profiles, review past performance, and initiate campaigns that align with your marketing goals. Our streamlined negotiation process and campaign management tools ensure that your brand’s message reaches the right audience, driving engagement and results.
+                </p>
+                <p class="mt-3">
+                    Join us today and take advantage of our innovative solutions to elevate your influencer marketing strategy or grow your personal brand. Together, we can create impactful partnerships and achieve extraordinary results.
+                </p>
+            </div>
+        </div>
+        {% endblock %}
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <span class="text-muted">Made by Manoj Prathapa &copy; 2024</span>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+
+</html>

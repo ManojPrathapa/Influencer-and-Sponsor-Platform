@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="page-title mb-4">Admin Dashboard</h1>
+
+    <!-- Dashboard Metrics -->
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <div class="card custom-dashboard-card card-active-users">
+                <div class="card-body">
+                    <h5 class="card-title">Active Users</h5>
+                    <p class="card-text">{{ active_users_count }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card custom-dashboard-card card-public-campaigns">
+                <div class="card-body">
+                    <h5 class="card-title">Public Campaigns</h5>
+                    <p class="card-text">{{ public_campaigns_count }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card custom-dashboard-card card-private-campaigns">
+                <div class="card-body">
+                    <h5 class="card-title">Private Campaigns</h5>
+                    <p class="card-text">{{ private_campaigns_count }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-4 mb-3">
+            <div class="card custom-dashboard-card card-pending-requests">
+                <div class="card-body">
+                    <h5 class="card-title">Pending Ad Requests</h5>
+                    <p class="card-text">{{ ad_requests_pending }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card custom-dashboard-card card-approved-requests">
+                <div class="card-body">
+                    <h5 class="card-title">Approved Ad Requests</h5>
+                    <p class="card-text">{{ ad_requests_approved }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card custom-dashboard-card card-rejected-requests">
+                <div class="card-body">
+                    <h5 class="card-title">Rejected Ad Requests</h5>
+                    <p class="card-text">{{ ad_requests_rejected }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Users Section -->
+    <div class="mt-4">
+        <h2 class="section-title">Users</h2>
+        <ul class="list-group custom-list-group">
+            {% for user in users %}
+            <li class="list-group-item">
+                <h5>{{ user.username }}</h5>
+                <p><strong>Role:</strong> {{ user.role }}</p>
+                <p><strong>Status:</strong> Active</p>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Sponsors Section -->
+    <div class="mt-4">
+        <h2 class="section-title">Sponsors</h2>
+        <ul class="list-group custom-list-group">
+            {% for sponsor in sponsors %}
+            <li class="list-group-item">
+                <h5>{{ sponsor.company }}</h5>
+                <p><strong>Username:</strong> {{ sponsor.user.username }}</p>
+                <p><strong>Bio:</strong> {{ sponsor.user.bio }}</p>
+                <p><strong>Active Campaigns:</strong></p>
+                <ul>
+                    {% for campaign in sponsor.campaigns_list %}
+                    <li>{{ campaign.title }}</li>
+                    {% endfor %}
+                </ul>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Campaigns Section -->
+    <div class="mt-4">
+        <h2 class="section-title">Campaigns</h2>
+        <ul class="list-group custom-list-group">
+            {% for campaign in campaigns %}
+            <li class="list-group-item">
+                <h5>{{ campaign.title }}</h5>
+                <p><strong>Description:</strong> {{ campaign.campaign_description }}</p>
+                <p><strong>Start Date:</strong> {{ campaign.start.strftime('%Y-%m-%d') }}</p>
+                <p><strong>End Date:</strong> {{ campaign.end.strftime('%Y-%m-%d') }}</p>
+                <p><strong>Visibility:</strong> {{ campaign.visibility }}</p>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

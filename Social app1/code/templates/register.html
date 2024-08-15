@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Registration Form Section -->
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card register-card p-4">
+        <div class="card-body">
+          <h5 class="card-title">Register</h5>
+          <form method="POST" action="{{ url_for('register') }}">
+            {{ form.hidden_tag() }}
+
+            <!-- Username Field -->
+            <div class="mb-3">
+              {{ form.username.label(class="form-label") }}
+              {{ form.username(class="form-control" + (' is-invalid' if form.username.errors else '')) }}
+              {% for error in form.username.errors %}
+              <div class="alert alert-danger mt-2">{{ error }}</div>
+              {% endfor %}
+            </div>
+
+            <!-- Password Field -->
+            <div class="mb-3">
+              {{ form.password.label(class="form-label") }}
+              {{ form.password(class="form-control" + (' is-invalid' if form.password.errors else '')) }}
+              {% for error in form.password.errors %}
+              <div class="alert alert-danger mt-2">{{ error }}</div>
+              {% endfor %}
+            </div>
+
+            <!-- Confirm Password Field -->
+            <div class="mb-3">
+              {{ form.confirm_password.label(class="form-label") }}
+              {{ form.confirm_password(class="form-control" + (' is-invalid' if form.confirm_password.errors else '')) }}
+              {% for error in form.confirm_password.errors %}
+              <div class="alert alert-danger mt-2">{{ error }}</div>
+              {% endfor %}
+            </div>
+
+            <!-- Role Selection Field -->
+            <div class="mb-3">
+              {{ form.user_role.label(class="form-label") }}
+              {{ form.user_role(class="form-control custom-select" + (' is-invalid' if form.user_role.errors else '')) }}
+              {% for error in form.user_role.errors %}
+              <div class="alert alert-danger mt-2">{{ error }}</div>
+              {% endfor %}
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-light-blue w-100">Register</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block styles %}
+<!-- Custom Styles -->
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
+
+  body {
+    font-family: "Roboto", sans-serif;
+    background-color: #ffffff;
+    color: #333;
+  }
+
+  .register-card {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .register-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  .card-title {
+    color: #333;
+    font-weight: 700;
+  }
+
+  .form-label {
+    color: #333;
+    font-weight: 500;
+  }
+
+  .form-control {
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    color: #333;
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
+  }
+
+  .form-control:focus {
+    border-color: #00aaff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 170, 255, 0.25);
+  }
+
+  .custom-select {
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    color: #333;
+  }
+
+  .custom-select option {
+    background-color: #ffffff;
+    color: #333;
+  }
+
+  .alert {
+    border-radius: 5px;
+    padding: 0.75rem;
+  }
+
+  .alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+  }
+
+  .btn-light-blue {
+    background-color: #00aaff;
+    border-color: #00aaff;
+    color: #ffffff;
+    font-weight: 500;
+  }
+
+  .btn-light-blue:hover {
+    background-color: #0088cc;
+    border-color: #0088cc;
+  }
+</style>
+{% endblock %}
+
+

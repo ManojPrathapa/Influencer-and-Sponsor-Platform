@@ -1,0 +1,107 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+<div class="container mt-4">
+  <h2 class="text-center mb-4">Ad Requests Overview</h2>
+
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      {% for ad_request in ad_requests %}
+      <div class="card mb-4 ad-request-item">
+        <div class="card-body">
+          <h5 class="card-title">Ad Request #{{ ad_request.request_id }}</h5>
+          <p class="card-text">
+            <strong>Campaign:</strong> {{ ad_request.campaign.title }} <!-- Assuming 'title' is a field in Campaign -->
+          </p>
+          <p class="card-text">
+            <strong>Content:</strong> {{ ad_request.request_content }}
+          </p>
+          <p class="card-text">
+            <strong>Payment Amount:</strong> {{ ad_request.payment_amount }}
+          </p>
+          <p class="card-text">
+            <strong>Status:</strong> {{ ad_request.request_status }}
+          </p>
+          {% if current_user.role == 'sponsor' %}
+          <div class="button-group">
+            <form action="{{ url_for('approve_ad_request', ad_request_id=ad_request.request_id) }}" method="post" style="display: inline;">
+              <button type="submit" class="btn btn-approve btn-sm mr-2">Approve</button>
+            </form>
+            <form action="{{ url_for('reject_ad_request', ad_request_id=ad_request.request_id) }}" method="post" style="display: inline;">
+              <button type="submit" class="btn btn-reject btn-sm mr-2">Reject</button>
+            </form>
+            <form action="{{ url_for('negotiate_ad_request', ad_request_id=ad_request.request_id) }}" method="post" style="display: inline;">
+              <button type="submit" class="btn btn-negotiate btn-sm">Negotiate</button>
+            </form>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %} 
+      {% if ad_requests|length == 0 %}
+      <p class="text-center">No ad requests available.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %} 
+
+{% block styles %}
+<style>
+  body {
+    font-family: "Roboto", sans-serif;
+    background-color: #ffffff;
+    color: #333333;
+  }
+
+  .ad-request-item {
+    background-color: #f9f9f9;
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+  }
+
+  .ad-request-item:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  .card-title,
+  .card-text {
+    color: #333333;
+  }
+
+  .btn-approve {
+    background-color: #4caf50;
+    border: none;
+    color: #ffffff;
+  }
+
+  .btn-reject {
+    background-color: #f44336;
+    border: none;
+    color: #ffffff;
+  }
+
+  .btn-negotiate {
+    background-color: #2196f3;
+    border: none;
+    color: #ffffff;
+  }
+
+  .btn-approve:hover,
+  .btn-reject:hover,
+  .btn-negotiate:hover {
+    opacity: 0.9;
+  }
+
+  .button-group {
+    margin-top: 10px;
+  }
+
+  .button-group .btn {
+    margin-right: 8px;
+  }
+</style>
+{% endblock %}
+

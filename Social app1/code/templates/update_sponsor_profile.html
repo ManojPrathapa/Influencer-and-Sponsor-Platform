@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2 class="page-title">Update Profile</h2>
+  <form method="POST" action="{{ url_for('update_sponsor_profile') }}">
+    {{ form.hidden_tag() }}
+    <div class="form-group">
+      {{ form.company.label(class="form-label") }}
+      {{ form.company(class="form-control") }}
+    </div>
+    <div class="form-group">
+      {{ form.sector.label(class="form-label") }}
+      {{ form.sector(class="form-control") }}
+    </div>
+    <div class="form-group">
+      {{ form.company_description.label(class="form-label") }}
+      {{ form.company_description(class="form-control") }}
+    </div>
+    <div class="form-group">
+      {{ form.submit(class="btn custom-btn custom-btn-primary") }}
+    </div>
+  </form>
+</div>
+{% endblock %}

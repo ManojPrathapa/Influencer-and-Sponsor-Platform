@@ -1,0 +1,197 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2 class="page-title">Sponsor Dashboard</h2>
+
+  <!-- Actions -->
+  <div class="row">
+    <div class="col-md-4 mb-3">
+      <a
+        href="{{ url_for('new_campaign') }}"
+        class="btn custom-btn custom-btn-primary"
+      >
+        Create Campaign
+      </a>
+    </div>
+    <div class="col-md-4 mb-3">
+      <a
+        href="{{ url_for('manage_campaigns') }}"
+        class="btn custom-btn custom-btn-success"
+      >
+        Manage Campaigns
+      </a>
+    </div>
+    <div class="col-md-4 mb-3">
+      <a
+        href="{{ url_for('view_ad_requests') }}"
+        class="btn custom-btn custom-btn-info"
+      >
+        View Ad Requests
+      </a>
+    </div>
+  </div>
+
+  <!-- Sponsor Profile -->
+  <div class="card mt-4 custom-profile-card">
+    <div class="card-body">
+      <h5 class="card-title">Your Profile</h5>
+      {% if current_user.sponsors %}
+        <ul class="list-group custom-list-group">
+          <li class="list-group-item">
+            <strong>Username:</strong> {{ current_user.username }}
+          </li>
+          <li class="list-group-item">
+            <strong>Company:</strong> {{ current_user.sponsors[0].company }}
+          </li>
+          <li class="list-group-item">
+            <strong>Industry:</strong> {{ current_user.sponsors[0].sector }}
+          </li>
+          <li class="list-group-item">
+            <strong>Description:</strong> {{ current_user.sponsors[0].company_description or 'N/A' }}
+          </li>
+        </ul>
+        <a href="{{ url_for('update_sponsor_profile') }}" class="btn custom-btn custom-btn-primary">Update Profile</a>
+      {% else %}
+        <p>No sponsor profile found.</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Search Influencers -->
+  <div class="card mt-4 custom-search-card">
+    <div class="card-body">
+      <h5 class="card-title">Search Influencers</h5>
+      <form method="GET" action="{{ url_for('sponsor_dashboard') }}" class="mb-4">
+        <div class="form-group">
+          <input type="text" name="search" class="form-control custom-search-bar" placeholder="Search influencers..." value="{{ search_query }}">
+        </div>
+        <button type="submit" class="btn custom-btn custom-btn-info">Search</button>
+      </form>
+
+      {% if influencers %}
+        <div class="list-group">
+          {% for influencer in influencers %}
+            <a href="#" class="list-group-item list-group-item-action">
+              <h5 class="mb-1">{{ influencer.username }}</h5>
+              <p class="mb-1"><strong>Description:</strong> {{ influencer.bio or 'N/A' }}</p>
+              <p class="mb-1"><strong>Joined Campaigns:</strong> {{ influencer_campaigns[influencer.user_id] | length }}</p>
+              <h6 class="mt-2">Joined Campaigns:</h6>
+              <ul>
+                {% if influencer_campaigns[influencer.user_id] %}
+                  {% for campaign in influencer_campaigns[influencer.user_id] %}
+                    <li>{{ campaign.title }}: {{ campaign.campaign_description }}</li>
+                  {% endfor %}
+                {% else %}
+                  <li>No campaigns joined.</li>
+                {% endif %}
+              </ul>
+            </a>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p>No influencers found.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block styles %}
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+  body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #8a4747; /* White background for the body */
+    color: #333; /* Darker text color for contrast */
+  }
+
+  .page-title {
+    color: #0066cc; /* Light blue color for page titles */
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+
+  .custom-btn {
+    border-radius: 8px;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    border: 2px solid transparent; /* Initial border color for buttons */
+  }
+
+  .custom-btn-primary {
+    background-color: #36145f; /* Purple for primary buttons */
+    border-color: #36145f;
+    color: #fff;
+  }
+
+  .custom-btn-primary:hover {
+    background-color: #7b1797; /* Darker purple on hover */
+    border-color: #7b1797;
+    transform: scale(1.05);
+  }
+
+  .custom-btn-success {
+    background-color: #4caf50; /* Green for success buttons */
+    border-color: #4caf50;
+    color: #fff;
+  }
+
+  .custom-btn-success:hover {
+    background-color: #388e3c; /* Darker green on hover */
+    border-color: #388e3c;
+    transform: scale(1.05);
+  }
+
+  .custom-btn-info {
+    background-color: #03a9f4; /* Light blue for info buttons */
+    border-color: #03a9f4;
+    color: #fff;
+  }
+
+  .custom-btn-info:hover {
+    background-color: #0288d1; /* Darker blue on hover */
+    border-color: #0288d1;
+    transform: scale(1.05);
+  }
+
+  .custom-profile-card {
+    background-color: #4caf50; /* Green background for profile card */
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .custom-search-card {
+    background-color: #4caf50; /* Green background for search card */
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .custom-list-group {
+    background-color: #25177a; /* White background for list group */
+    border: 1px solid #5d0606;
+    border-radius: 8px;
+  }
+
+  .list-group-item {
+    border: none;
+    color: #333; /* Darker text color for list items */
+  }
+
+  .list-group-item:not(:last-child) {
+    border-bottom: 1px solid #ddd;
+  }
+
+  .custom-search-bar {
+    border: 2px solid #007bff; /* Blue border for search bar */
+    border-radius: 8px;
+  }
+
+  .custom-search-bar:focus {
+    border-color: #0056b3; /* Darker blue border on focus */
+    box-shadow: 0 0 0 0.2rem rgba(30, 144, 255, 0.25);
+  }
+</style>
+{% endblock %}

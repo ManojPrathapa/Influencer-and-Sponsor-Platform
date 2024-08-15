@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Main content area -->
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card card-custom p-4">
+        <h5 class="card-title">Negotiate Ad Request</h5>
+        <form method="post" action="{{ url_for('negotiate_ad_request', ad_request_id=ad_request.request_id) }}">
+          {{ form.hidden_tag() }}
+
+          <!-- Content Input Field -->
+          <div class="form-group">
+            {{ form.content.label(class="form-label text-dark") }}
+            {{ form.content(class="form-control" + (' is-invalid' if form.content.errors else '')) }}
+            {% if form.content.errors %}
+            <div class="invalid-feedback">
+              {% for error in form.content.errors %}
+              <span>{{ error }}</span><br />
+              {% endfor %}
+            </div>
+            {% endif %}
+          </div>
+
+          <!-- Payment Amount Input Field -->
+          <div class="form-group">
+            {{ form.payment_amount.label(class="form-label text-dark") }}
+            {{ form.payment_amount(class="form-control" + (' is-invalid' if form.payment_amount.errors else '')) }}
+            {% if form.payment_amount.errors %}
+            <div class="invalid-feedback">
+              {% for error in form.payment_amount.errors %}
+              <span>{{ error }}</span><br />
+              {% endfor %}
+            </div>
+            {% endif %}
+          </div>
+
+          <button type="submit" class="btn btn-light-blue mt-3">Submit Negotiation</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block styles %}
+<!-- Custom styles -->
+<style>
+  body {
+    font-family: "Roboto", sans-serif; /* Apply Roboto font */
+    background-color: #ffffff; /* White background for the page */
+    color: #333; /* Dark text for readability */
+  }
+
+  .card-custom {
+    background-color: #ffffff; /* White background for card */
+    border: 1px solid #e0e0e0; /* Light gray border */
+    border-radius: 8px; /* Rounded corners for the card */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .card-custom:hover {
+    transform: translateY(-5px); /* Lift card on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
+  }
+
+  .form-control {
+    background-color: #ffffff; /* White background for input fields */
+    color: #333; /* Dark text */
+    border: 1px solid #ccc; /* Light gray border */
+    border-radius: 5px; /* Rounded corners for inputs */
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+  }
+
+  .form-control:focus {
+    border-color: #00aaff; /* Light blue border on focus */
+    background-color: #f0faff; /* Very light blue background on focus */
+  }
+
+  .form-label {
+    color: #333; /* Dark text for labels */
+    font-weight: 500; /* Bold labels */
+  }
+
+  .invalid-feedback {
+    color: #dc3545; /* Red color for error messages */
+  }
+
+  .btn-light-blue {
+    background-color: #00aaff; /* Light blue button background */
+    border-color: #00aaff; /* Matching border color */
+    color: #ffffff; /* White text */
+    font-weight: 500;
+  }
+
+  .btn-light-blue:hover {
+    background-color: #0088cc; /* Darker blue on hover */
+    border-color: #0088cc; /* Matching border color on hover */
+  }
+</style>
+{% endblock %}
+
